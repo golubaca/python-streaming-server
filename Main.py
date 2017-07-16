@@ -11,7 +11,6 @@ server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server_socket.bind(("", 5005))
 server_socket.listen(5)
 
-connections = []
 opened_cameras = {}
 
 
@@ -28,14 +27,12 @@ while 1:
         # if camera url does not exsists in oppened camera, open new connection,
         # or else just append client params and pass to Connection thread
         if cam_url not in opened_cameras:
-            # opened_cameras.append(cam_url)
             client = Connection.Connection([client_socket, cam_url])
             opened_cameras[cam_url] = client
             _thread.start_new_thread(client.capture, (opened_cameras,))
 
         else:
             opened_cameras[cam_url].addConnection(client_socket)
-        connections.append([client_socket, cam_url])
 
     except socket.timeout:
         continue
