@@ -5,12 +5,12 @@ import numpy
 import random
 import sys
 
-host = sys.argv[1]
-cam_url = sys.argv[2]
+host = sys.argv[1] # e.g. localhost, 192.168.1.123
+cam_url = sys.argv[2] # rtsp://user:pass@url/live.sdp , http://url/video.mjpg ...
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 client_socket.connect((host, 5005))
-name = str(random.random())
+name = str(random.random()) # gives random name to create window
 
 client_socket.send(str.encode(cam_url))
 

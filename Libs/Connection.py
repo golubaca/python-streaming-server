@@ -45,6 +45,6 @@ class Connection(object):
     def send(self,c, data):
         try:
             c.send(data)
-            c.send(b"END!")
+            c.send(b"END!") # send param to end loop in client
         except socket.error:
             self.socket.remove(c)
